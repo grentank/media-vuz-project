@@ -1,9 +1,12 @@
 # Custom
 package-lock.json
 sessions/
-parsing/
 public/js/
 distr/
+db/parsing/data.xlsx
+db/parsing/jsonData.txt
+db/user.txt
+createUser.js
 
 # Logs
 logs

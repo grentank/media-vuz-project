@@ -4,10 +4,11 @@ import {
 import { Adb as AdbIcon, Menu as MenuIcon } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const pages = [{ name: 'Главная', link: '/' }, { name: 'Формат', link: '/format' }, { name: 'Контакты', link: '/contacts' }];
 
-export default function NavBar() {
+export default function NavBar({ userState: [user, setUser] }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navigate = useNavigate();
 
@@ -18,6 +19,16 @@ export default function NavBar() {
   const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
     navigate(page.link);
+  };
+
+  const logoutHandler = () => {
+    setAnchorElNav(null);
+    axios('/api/v1/logout')
+      .then(() => {
+        setUser({});
+        navigate('/');
+      })
+      .catch(console.log);
   };
 
   return (
@@ -77,6 +88,16 @@ export default function NavBar() {
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
+              {user.admin && (
+              <MenuItem key="toAdmin" onClick={() => handleCloseNavMenu({ link: '/admin' })}>
+                <Typography textAlign="center">Админка</Typography>
+              </MenuItem>
+              ) }
+              {user.id && (
+              <MenuItem key="logout" onClick={logoutHandler}>
+                <Typography textAlign="center">Выйти</Typography>
+              </MenuItem>
+              ) }
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -108,6 +129,24 @@ export default function NavBar() {
                 {page.name}
               </Button>
             ))}
+            {user.admin && (
+            <Button
+              key="toAdmin"
+              onClick={() => handleCloseNavMenu({ link: '/admin' })}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Админка
+            </Button>
+            )}
+            {user.id && (
+            <Button
+              key="logout"
+              onClick={logoutHandler}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Выйти
+            </Button>
+            )}
           </Box>
 
         </Toolbar>
