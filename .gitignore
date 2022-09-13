@@ -1,3 +1,10 @@
+# Custom
+package-lock.json
+sessions/
+parsing/
+public/js/
+distr/
+
 # Logs
 logs
 *.log
