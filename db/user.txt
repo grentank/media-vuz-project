@@ -1,1 +1,0 @@
-{"id":1,"email":"79168306642@yandex.ru","hashedPassword":"$2b$15$s6FPq0q9DII8D9m/PFel.u0L20THU0CXdpSUg/1V3suXfWniyqZn6","admin":true}
